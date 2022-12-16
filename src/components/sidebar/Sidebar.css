@@ -1,0 +1,40 @@
+.menu{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    justify-content: center;
+
+}
+.links{
+    justify-content: center;
+    align-items: center;
+    border-radius: 40px;
+    display: inline-flex;
+    margin-top: 15px;
+    padding: 15px 30px 15px 15px;
+    text-decoration: none;
+    width: fit-content;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    
+
+}
+.links:hover{
+    align-items: center;
+    border-radius: 40px;
+    color: #61a1fa;
+    display: inline-flex;
+    margin-top: 15px;
+    padding: 15px 30px 15px 15px;
+    text-decoration: none;
+    width: fit-content;
+    background-color: #dcebf7;
+    cursor: pointer;
+}
+.link{
+    text-decoration: none;
+    color: black;
+}
+.icon{
+    margin-right: 15px;
+}
