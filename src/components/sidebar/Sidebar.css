@@ -1,3 +1,14 @@
+nav{
+    width: 260px;
+    margin-left: 60px;
+}
+@media screen and (max-width:992px){
+nav{
+    margin-left: 10px;
+    width: 210px;
+}
+}
+
 .menu{
     display: flex;
     flex-direction: column;
@@ -5,6 +16,7 @@
     justify-content: center;
 
 }
+
 .links{
     justify-content: center;
     align-items: center;

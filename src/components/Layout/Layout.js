@@ -2,8 +2,7 @@ import React from 'react'
 import './Layout.css'
 import logo from '../../logo.svg'
 import Sidebar from '../sidebar/Sidebar'
-import Home from '../home/Home'
-const  Layout = () => {
+const  Layout = (props) => {
   return (
     <div className='parent'>
         <header className='header'>
@@ -13,8 +12,10 @@ const  Layout = () => {
             </nav>
         </header>
         <div className='content'>
-            <div className='head'>home</div>
-            <Home/>
+            <div className='head'>
+              {props.title}
+              </div>
+            {props.children}
         </div>
     </div>
   )

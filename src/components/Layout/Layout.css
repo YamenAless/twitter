@@ -1,4 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+* , :after :before{
+    box-sizing: border-box;
+}
+
 body{
     font-family: 'Poppins', sans-serif;
 }
@@ -7,20 +11,6 @@ body{
 }
 .header{
     display: block;
-    width: 320px;
-    height: 100vh;
-    /* background-color: black; */
-}
-nav{
-    width: 260px;
-    margin-left: 60px;
-    /* background-color: brown; */
-}
-@media screen and (max-width:992){
-nav{
-    margin-left: 10px;
-    width: 210px;
-}
 }
 .react-logo{
     width: 120px;
@@ -45,4 +35,5 @@ nav{
     justify-content: space-between;
     padding: 10px 15px;
     font-size: 20pt;
+    color: black;
 }

@@ -1,14 +1,14 @@
 import './App.css';
-import Layout from './components/Layout/Layout';
 import { Route,Routes } from 'react-router-dom';
 import Home from './components/home/Home';
+import Profile from './components/profile/Profile';
 function App() {
   return (
     <div className="App">
-      <Layout/>
       <Routes>
-        <Route path='/' element={<Home/>}/>
-        {/* <Route path='*' element={<>NotFound</>}/> */}
+      <Route path='/' element={<Home/>}/>
+      <Route path='/profile' element={<Profile/>}/>
+        <Route path='*/:' element={<>NotFound</>}/>
       </Routes>
     </div>
   );
