@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Layout from "../Layout/Layout";
 import "./Profile.css";
 import { DataCtx } from "../../components/context/SaveData/SaveData";
@@ -10,10 +10,11 @@ const Profile = () => {
     name: user.name,
     email: user.email,
     password: "",
-
+    avatar:user.avatar
   });
+  const fileRef= useRef()
 
-
+console.log(sendContent)
   const UpadeProfile = async (e) => {
     e.preventDefault();
     const fromData = new FormData(e.target);
@@ -26,12 +27,11 @@ const Profile = () => {
       body: fromData,
     })
     const json = await resp.json()
+    alert(json.messages)
     if(json.success){
-      alert(json.messages)
-      setSendContent(json.data)
-      signIn(sendContent,token)
-    }else if(!json.success)
-     alert(json.messages)
+      setSendContent({...json.data, password:""})
+      localStorage.setItem("user", JSON.stringify(json.data))
+    }
   }
 
   const [data, setData] = useState([]);
@@ -70,19 +70,15 @@ const Profile = () => {
           <div className="alert alert-info">My Information</div>
           <div className="form-field mb-3 person-avatar">
             <label htmlFor="avatar" className="mx-auto my-2 d-block w-25">
-              <img src={sendContent.avatar} className="img" />
+              <img src={sendContent.avatar} className="img" onClick={()=> fileRef.current.click()} />
             </label>
           </div>
           <input
             name="avatar"
             type="file"
             className="position-absolute"
-            onChange={(e) => {
-              setSendContent({
-                ...sendContent,
-                avatar: e.target.files[0],
-              });
-            }}
+            style={{display: 'none'}}
+            ref={fileRef}
           />
           <br />
           <div className="form-field mb-3">
@@ -142,6 +138,7 @@ const Profile = () => {
               name="password"
               type="Password"
               className="form-control"
+              value={sendContent.password}
               onChange={(e) => {
                 setSendContent({
                   ...sendContent,

@@ -79,7 +79,7 @@ const Signin = () => {
 
             <div className="signup-btns">
               <div className="signin-link">
-                <Link to={'/signup'} className="signin-link">
+                <Link to={'/'} className="signin-link">
                 Register
                 </Link>
               </div>
