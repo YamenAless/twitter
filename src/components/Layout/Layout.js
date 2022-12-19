@@ -1,19 +1,22 @@
 import React from 'react'
 import './Layout.css'
-import logo from '../../logo.svg'
+import icon from '../../icon.png'
 import Sidebar from '../sidebar/Sidebar'
+import HeadNav from '../headNav/Headnav'
 const  Layout = (props) => {
   return (
     <div className='parent'>
         <header className='header'>
             <nav className='nav'>
-                <img src={logo} className="react-logo" alt={"reactLogo"}/>
+                <img src={icon} className="react-logo" alt={"reactLogo"}/>
                 <Sidebar/>
             </nav>
         </header>
         <div className='content'>
             <div className='head'>
               {props.title}
+              <HeadNav/>
+
               </div>
             {props.children}
         </div>

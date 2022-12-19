@@ -21,7 +21,7 @@ nav{
     justify-content: center;
     align-items: center;
     border-radius: 40px;
-    display: inline-flex;
+    display: flex;
     margin-top: 15px;
     padding: 15px 30px 15px 15px;
     text-decoration: none;
@@ -35,7 +35,7 @@ nav{
     align-items: center;
     border-radius: 40px;
     color: #61a1fa;
-    display: inline-flex;
+    display: flex;
     margin-top: 15px;
     padding: 15px 30px 15px 15px;
     text-decoration: none;
@@ -46,7 +46,19 @@ nav{
 .link{
     text-decoration: none;
     color: black;
+    display: flex;
+
+}
+.link.active{
+    text-decoration: none;
+    color: #61a1fa;
+    display: flex;
 }
 .icon{
     margin-right: 15px;
+    display: flex;
+
+}
+.icon.active{
+    color: #61a1fa;
 }

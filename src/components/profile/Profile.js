@@ -1,54 +1,116 @@
 import React from "react";
 import Layout from "../Layout/Layout";
 import "./Profile.css";
+import { DataCtx } from "../../components/context/SaveData/SaveData";
+import { useState, useContext, useEffect } from "react";
 
 const Profile = () => {
+  const { token, user , signIn } = useContext(DataCtx);
+  const [sendContent, setSendContent] = useState({
+    name: user.name,
+    email: user.email,
+    password: "",
+
+  });
+
+
+  const UpadeProfile = async (e) => {
+    e.preventDefault();
+    const fromData = new FormData(e.target);
+  const resp = await  fetch("http://ferasjobeir.com/api/users/me", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: fromData,
+    })
+    const json = await resp.json()
+    if(json.success){
+      alert(json.messages)
+      setSendContent(json.data)
+      signIn(sendContent,token)
+    }else if(!json.success)
+     alert(json.messages)
+  }
+
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetch("http://ferasjobeir.com/api/users/me", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => setData(json.data.posts));
+  }, []);
+
+  const deletPost = async (id) => {
+    const res = await fetch(`http://ferasjobeir.com/api/posts/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const json = await res.json();
+    if (json.success) {
+      const NewData = [...data];
+      const index = NewData.findIndex((singleId) => singleId.id == id);
+      NewData.splice(index , 1);
+      setData(NewData);
+      alert("Are you sure you want to delete your post ?")
+    }
+  };
+
   return (
     <Layout title="Profile">
-      <form>
+      <form onSubmit={UpadeProfile}>
         <div className="form">
           <div className="alert alert-info">My Information</div>
           <div className="form-field mb-3 person-avatar">
             <label htmlFor="avatar" className="mx-auto my-2 d-block w-25">
-              <img
-                src="https://www.ferasjobeir.com/storage/public/bb0ZUV6yBVNmjf7XhYMaxsmp1o9m4PGNguW18E2S.png"
-                className="img"
-              />
-              <div className="icon">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="36"
-                  height="36"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="#FFF"
-                    d="M5 5h-3v-1h3v1zm8 5c-1.654 0-3 1.346-3 3s1.346 3 3 3 3-1.346 3-3-1.346-3-3-3zm11-4v15h-24v-15h5.93c.669 0 1.293-.334 1.664-.891l1.406-2.109h8l1.406 2.109c.371.557.995.891 1.664.891h3.93zm-19 4c0-.552-.447-1-1-1-.553 0-1 .448-1 1s.447 1 1 1c.553 0 1-.448 1-1zm13 3c0-2.761-2.239-5-5-5s-5 2.239-5 5 2.239 5 5 5 5-2.239 5-5z"
-                  ></path>
-                </svg>
-              </div>
+              <img src={sendContent.avatar} className="img" />
             </label>
           </div>
+          <input
+            name="avatar"
+            type="file"
+            className="position-absolute"
+            onChange={(e) => {
+              setSendContent({
+                ...sendContent,
+                avatar: e.target.files[0],
+              });
+            }}
+          />
+          <br />
           <div className="form-field mb-3">
             <label htmlFor="name" className="mb-2">
               <small>
-                Name{" "}
-                <span
-                  className="text-danger"
-                  style={{
-                    color: "red",
-                  }}
-                >
+                Name
+                <span className="text-danger" style={{ color: "red" }}>
                   *
                 </span>
               </small>
             </label>
-            <input name="name" type="text" id="name" className="form-control" />
+            <input
+              name="name"
+              type="text"
+              className="form-control"
+              value={sendContent.name}
+              onChange={(e) => {
+                setSendContent({
+                  ...sendContent,
+                  name: e.target.value,
+                });
+              }}
+            />
           </div>
           <div className="form-field mb-3">
             <label htmlFor="email" className="mb-2">
               <small>
-                Email Address{" "}
+                Email Address
                 <span
                   className="text-danger"
                   style={{
@@ -59,36 +121,70 @@ const Profile = () => {
                 </span>
               </small>
             </label>
-            <input name="email" type="email" className="form-control" />
+            <input
+              name="email"
+              type="email"
+              className="form-control"
+              value={sendContent.email}
+              onChange={(e) => {
+                setSendContent({
+                  ...sendContent,
+                  email: e.target.value,
+                });
+              }}
+            />
           </div>
           <div className="form-field mb-3">
-            <label htmlFor="Password" className="mb-2">
+            <label htmlFor="password" className="mb-2">
               <small>Password</small>
             </label>
-            <input name="Password" type="Password" className="form-control" />
+            <input
+              name="password"
+              type="Password"
+              className="form-control"
+              onChange={(e) => {
+                setSendContent({
+                  ...sendContent,
+                  password: e.target.value,
+                });
+              }}
+            />
           </div>
+
           <div className="form-field mb-3">
-            <label htmlFor="New Password" className="mb-2">
+            <label htmlFor="new_password" className="mb-2">
               <small>New Password</small>
             </label>
             <input
-              name="New Password"
+              name="new_password"
               type="password"
               className="form-control"
+              onChange={(e) => {
+                setSendContent({
+                  ...sendContent,
+                  new_Password: e.target.value,
+                });
+              }}
             />
           </div>
 
           <div className="form-field mb-3">
-            <label htmlFor="New Password Confirmation" className="mb-2">
+            <label htmlFor="new_Password_Confirmation" className="mb-2">
               <small>New Password Confirmation</small>
             </label>
             <input
-              name="New_Password_Confirmation"
+              name="new_Password_Confirmation"
               type="password"
               className="form-control"
+              onChange={(e) => {
+                setSendContent({
+                  ...sendContent,
+                  new_Password_Confirmation: e.target.value,
+                });
+              }}
             />
           </div>
-
+          <input type="hidden" name="_method" value="put" />
           <div className="form-field mb-3">
             <button type="submit" className="btn ">
               Update Profile
@@ -96,6 +192,27 @@ const Profile = () => {
           </div>
         </div>
       </form>
+      <div className="alert p-3">
+        <div className="alert alert-info">My Posts</div>
+
+        <ul className="list-group">
+          {data?.map((item) => (
+            <li className="list-group-item" key={item?.id}>
+              <span className="hide-extra">{item?.content}</span>
+              <span>
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={() => {
+                    deletPost(item?.id);
+                  }}
+                >
+                  Delete
+                </button>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </Layout>
   );
 };

@@ -1,20 +1,83 @@
 import React from "react";
 import "./Addcomment.css";
+import { useState, useContext, useEffect } from "react";
+import { DataCtx } from "../../components/context/SaveData/SaveData";
+import dayjs from "dayjs";
+import {useRef} from 'react'
 
-const Addcomment = () => {
+const Addcomment = ({ item, posts, setPosts }) => {
+  const { token } = useContext(DataCtx);
+  const [comments, SetComments] = useState([]);
+  const [commentData, setCommentData] = useState({
+    content: "",
+    post_id: item.id,
+  });
+   const remove = useRef()
+  const hundleOnChange = (e) => {
+    commentData[e.target.name] = e.target.value;
+  };
+
+  useEffect(() => {
+    fetch(`http://ferasjobeir.com/api/posts/${item.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => SetComments(json.data.comments));
+  }, []);
+
+  const sendComment = async () => {
+    const res = await fetch("http://ferasjobeir.com/api/comments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(commentData),
+    });
+    const json = await res.json();
+    if (json.success) {
+      SetComments([ ...comments, json.data]);
+      const NewArrData = [...posts]
+      const CCT = NewArrData.findIndex(singleItem => singleItem.id === item.id)
+      NewArrData[CCT].comments_count = parseInt(NewArrData[CCT].comments_count) + 1
+      setPosts(NewArrData)
+      remove.current.value = "";
+    }
+  };
+
   return (
-    <div className="comments">
-      <div className="comment">
-        <img src="https://avatars.githubusercontent.com/u/79771322?v=4" />
-        <div>
-          <h3 className="comment_name">user</h3>
-          <h6 className="comment_datetime">1 hour ago</h6>
-          <p className="content">tweets content</p>
+    <div>
+      {comments?.map((item) => (
+        <div className="comments" key={item.id}>
+          <div className="comment">
+            <img src={item.user.avatar} />
+            <div>
+              <h3 className="comment_name">{item.user.name}</h3>
+              <h6 className="comment_datetime">
+                {dayjs(item.created_at).fromNow()}
+              </h6>
+              <p className="content">{item.content}</p>
+            </div>
+          </div>
         </div>
-      </div>
+      ))}
       <div className="add-comment">
-        <input  placeholder="Add a new comment" className="input-faild" type={"text"} />
-        <input className="btn" type={"button"} value={"Add"} />
+        <input
+          placeholder="Add a new comment"
+          className="input-faild"
+          type={"text"}
+          name="content"
+          onChange={hundleOnChange}
+          ref={remove}
+        />
+        <input
+          className="btn"
+          type={"button"}
+          value={"Add"}
+          onClick={sendComment}
+        />
       </div>
     </div>
   );

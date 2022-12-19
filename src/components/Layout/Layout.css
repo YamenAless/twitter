@@ -12,8 +12,18 @@ body{
 .header{
     display: block;
 }
+
+@media screen and (max-width: 700px){
+    .header {
+        display: none;
+    }
+    
+}
+
+
+
 .react-logo{
-    width: 120px;
+    width: 70px;
     margin-top: 20px;
     margin-bottom: 5px;
     max-width: 100%;
@@ -36,4 +46,9 @@ body{
     padding: 10px 15px;
     font-size: 20pt;
     color: black;
+    display: flex;
+    gap: 10px;
 }
+
+
+

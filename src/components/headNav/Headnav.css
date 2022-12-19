@@ -1,0 +1,23 @@
+.head-nav{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    color: #0d6efd;
+}
+.head-icon{
+    display: flex;
+    background-color: #f3f4f5;
+    color:rgb(29, 46, 176);
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+}
+@media screen and (max-width: 700px) {
+    .head-nav {
+      opacity: 1    ;
+    }
+  }

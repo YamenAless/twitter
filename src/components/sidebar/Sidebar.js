@@ -8,36 +8,48 @@ import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import PersonIcon from '@mui/icons-material/Person';
 import LockIcon from '@mui/icons-material/Lock';
+
 const Sidebar = () => {
   return (
     <div className="menu">
       <div className="links">
+        
+        <NavLink className="link" to={"/"}>
         <div className="icon"><HomeIcon /></div>
-        <NavLink className="link" to={"/"}>Home</NavLink>
+          Home</NavLink>
       </div>
       <div className="links">
+        
+        <NavLink className="link" to={"/somewhere"}>
         <div className="icon"><ExploreIcon /></div>
-        <NavLink className="link" to={"/Explore"}>Explore</NavLink>
+          Explore</NavLink>
       </div>
       <div className="links">
+        <NavLink className="link" to={"/somewhere"}>
         <div className="icon"><EmailIcon /></div>
-        <NavLink className="link" to={"/Messages"}>Messages</NavLink>
+          
+          Messages</NavLink>
       </div>
       <div className="links">
+        <NavLink className="link" to={"/somewhere"}>
         <div className="icon"><BookmarksIcon /></div>
-        <NavLink className="link" to={"/Bookmarks"}>Bookmarks</NavLink>
+          Bookmarks</NavLink>
       </div>
       <div className="links">
+        <NavLink className="link" to={"/somewhere"}>
         <div className="icon"><ViewListIcon /></div>
-        <NavLink className="link" to={"/Lists"}>Lists</NavLink>
+          
+          Lists</NavLink>
       </div>
       <div className="links">
+        <NavLink className="link" to={"/Profile"}>
         <div className="icon"><PersonIcon /></div>
-        <NavLink className="link" to={"/Profile"}>Profile</NavLink>
+          Profile</NavLink>
       </div>
       <div className="links">
+        <NavLink className="link" to={"/signout"}>
         <div className="icon"><LockIcon /></div>
-        <NavLink className="link" to={"/Signout"}>Signout</NavLink>
+          Signout</NavLink>
       </div>
     </div>
   );
