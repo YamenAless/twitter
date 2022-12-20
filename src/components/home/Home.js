@@ -5,13 +5,27 @@ import SinglePost from "../SinglePost/SinglePost";
 import { useState, useContext, useEffect } from "react";
 import { DataCtx } from "../../components/context/SaveData/SaveData";
 import {useRef} from 'react'
+import Loadin from "../loading/Loadin";
 
 const Home = () => {
-  const [openComment, setOpenComment] = useState(false);
-  const [posts, setPosts] = useState([]);
   const { token ,user } = useContext(DataCtx);
+  const [pageNum , setPageNum] = useState({})
+  const [posts, setPosts] = useState([]);
   const [num, setNum] = useState(1);
+  const [loading , setLoading]  = useState(false)
   const clear = useRef()
+
+  const handleOnScroll = () => {
+    let userScrollH =
+      document.documentElement.clientHeight + document.documentElement.scrollTop + 1;
+    let windowBottomHeight = document.documentElement.offsetHeight;
+    if (userScrollH >= windowBottomHeight ) { 
+        setNum(num + 1);
+    }
+    <Loadin/>
+  };
+  console.log(pageNum.last_page)
+
   useEffect(() => {
     window.addEventListener("scroll", () => handleOnScroll());
     return () => {
@@ -22,28 +36,22 @@ const Home = () => {
     document.documentElement.clientHeight + document.documentElement.scrollTop,
   ]);
 
-  const handleOnScroll = () => {
-    let userScrollH =
-      document.documentElement.clientHeight +
-      document.documentElement.scrollTop +
-      1;
-    let windowBottomHeight = document.documentElement.offsetHeight;
-    if (userScrollH >= windowBottomHeight) {
-      setNum(num + 1);
-    }
-  };
 
   const getPosts = async (count) => {
+    setLoading(true);
     const res = await fetch(`http://ferasjobeir.com/api/posts?page=${count}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     const json = await res.json();
-    if (json) {
+    setPageNum({...json.data})
+    if (json.success) {
       setPosts([...posts, ...json.data.data]);
     }
   };
+
+
 
   useEffect(() => {
     getPosts(num);
@@ -71,13 +79,10 @@ const Home = () => {
       const newPosts = [json.data,...posts]
       clear.current.value = ""
       setPosts([...newPosts])
+      setLoading(false);
     }else if(!json.success){
       alert(json.messages)
-    }
-
-
-
-    
+    }  
   } 
 
   return (
@@ -103,6 +108,8 @@ const Home = () => {
       {posts.map((item) => (
         <SinglePost key={item.id} posts={posts} setPosts={setPosts} item={item} />
       ))}
+      {loading && <Loadin />}
+      {/* <p className="last-Page">The end of the posts</p> */}
     </Layout>
   );
 };

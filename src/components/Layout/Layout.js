@@ -3,6 +3,7 @@ import './Layout.css'
 import icon from '../../icon.png'
 import Sidebar from '../sidebar/Sidebar'
 import HeadNav from '../headNav/Headnav'
+import Loadin from '../loading/Loadin'
 const  Layout = (props) => {
   return (
     <div className='parent'>
@@ -18,7 +19,8 @@ const  Layout = (props) => {
               <HeadNav/>
 
               </div>
-            {props.children}
+              
+            {<Loadin/> && props.children}
         </div>
     </div>
   )

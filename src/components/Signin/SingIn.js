@@ -1,5 +1,5 @@
 import React from "react";
-import '../SignUp/SignUp.css'
+import './Signin.css'
 import logo from "../../logo.svg";
 import {Link} from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
@@ -41,8 +41,6 @@ const Signin = () => {
     event.preventDefault();
     await createUser(userData);
   };
-
-
 
 
   return (

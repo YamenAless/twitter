@@ -1,24 +1,26 @@
 import './App.css';
 import { Route,Routes } from 'react-router-dom';
-import Home from './components/home/Home';
 import Profile from './components/profile/Profile';
 import SignUp from './components/SignUp/SignUp';
 import {DataCtx}  from './components/context/SaveData/SaveData.js'
-import { useContext } from "react";
+import React, { Suspense, useContext } from "react";
 import SignOut from './components/signout/Signout';
 import Signin from './components/Signin/SingIn';
-import NotFound from './NotFound/NotFound'
+import Loadin from './components/loading/Loadin';
+const Home = React.lazy(()=> import('./components/home/Home')) ;
+
+
 const  App = () => {
   const {token} = useContext(DataCtx)
   return (
     <div className="App">
+      {/* <Loadin/> */}
     <Routes>
-      {token ? <Route path='/' element={<Home/>}/> : <Route path='/' element={<SignUp/>}/> }  
+      {token ? <Route path='/' element={<Suspense fallback={<Loadin/>}><Home/></Suspense>}/> : <Route path='/' element={<SignUp/>}/> }  
       <Route path='/signout' element={<SignOut/>}/> 
-      {token && <Route path='/profile' element={<Profile/>}/>}
-      {/* {!token &&  <Route path='/signup' element={<SignUp/>}/> } */}
+      <Route path='/profile' element={<Suspense fallback={<Loadin/>}><Profile /></Suspense>}/>
       <Route path='/Signin' element={<Signin/>}/>
-        <Route path='/:' element={<>NotFound</>}/>
+      <Route path='/:' element={<>NotFound</>}/>
       </Routes>
     </div>
   );

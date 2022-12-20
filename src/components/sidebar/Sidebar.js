@@ -13,7 +13,6 @@ const Sidebar = () => {
   return (
     <div className="menu">
       <div className="links">
-        
         <NavLink className="link" to={"/"}>
         <div className="icon"><HomeIcon /></div>
           Home</NavLink>

@@ -3,9 +3,11 @@ import Layout from "../Layout/Layout";
 import "./Profile.css";
 import { DataCtx } from "../../components/context/SaveData/SaveData";
 import { useState, useContext, useEffect } from "react";
+import Loadin from "../loading/Loadin";
 
 const Profile = () => {
   const { token, user , signIn } = useContext(DataCtx);
+  const [alert , setAlert] = useState(false)
   const [sendContent, setSendContent] = useState({
     name: user.name,
     email: user.email,
@@ -14,7 +16,6 @@ const Profile = () => {
   });
   const fileRef= useRef()
 
-console.log(sendContent)
   const UpadeProfile = async (e) => {
     e.preventDefault();
     const fromData = new FormData(e.target);
@@ -46,7 +47,7 @@ console.log(sendContent)
   }, []);
 
   const deletPost = async (id) => {
-    const res = await fetch(`http://ferasjobeir.com/api/posts/${id}`, {
+      const res = await fetch(`http://ferasjobeir.com/api/posts/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -55,13 +56,14 @@ console.log(sendContent)
 
     const json = await res.json();
     if (json.success) {
+      window.confirm("Are you sure you want to delete your post ?")
       const NewData = [...data];
-      const index = NewData.findIndex((singleId) => singleId.id == id);
-      NewData.splice(index , 1);
-      setData(NewData);
-      alert("Are you sure you want to delete your post ?")
+      const findeInd = NewData.filter((l) => l.id !== id )
+      setData(findeInd);
+     
+    
+  }
     }
-  };
 
   return (
     <Layout title="Profile">
@@ -200,7 +202,9 @@ console.log(sendContent)
                 <button
                   className="btn btn-danger btn-sm"
                   onClick={() => {
+            
                     deletPost(item?.id);
+                    
                   }}
                 >
                   Delete

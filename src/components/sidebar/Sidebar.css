@@ -17,36 +17,24 @@ nav{
 
 }
 
-.links{
-    justify-content: center;
-    align-items: center;
-    border-radius: 40px;
-    display: flex;
-    margin-top: 15px;
-    padding: 15px 30px 15px 15px;
-    text-decoration: none;
-    width: fit-content;
-    width: -webkit-fit-content;
-    width: -moz-fit-content;
-    
-
-}
-.links:hover{
-    align-items: center;
-    border-radius: 40px;
-    color: #61a1fa;
-    display: flex;
-    margin-top: 15px;
-    padding: 15px 30px 15px 15px;
-    text-decoration: none;
-    width: fit-content;
-    background-color: #dcebf7;
-    cursor: pointer;
-}
 .link{
+    align-items: center;
     text-decoration: none;
     color: black;
     display: flex;
+    border-radius: 40px;
+    margin-top: 15px;
+    padding: 15px 30px 15px 15px;
+    width: fit-content;
+    cursor: pointer;
+
+}
+.link:hover{
+    text-decoration: none;
+    color: #61a1fa;
+    display: flex;
+    background-color: #e5eef5;
+
 
 }
 .link.active{
