@@ -49,22 +49,25 @@ const Profile = () => {
   }, []);
 
   const deletPost = async (id) => {
+    const answer = window.confirm("Are you sure you want to delete your post")
+    if(answer){
       const res = await fetch(`http://ferasjobeir.com/api/posts/${id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    const json = await res.json();
-    if (json.success) {
-      window.confirm("Are you sure you want to delete your post ?")
-      const NewData = [...data];
-      const findeInd = NewData.filter((l) => l.id !== id )
-      setData(findeInd);
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      const json = await res.json();
+      if (json.success) {
+        const NewData = [...data];
+        const findeInd = NewData.filter((l) => l.id !== id )
+        setData(findeInd);
+       
+      
+    }
+    }
      
-    
-  }
     }
 
   return (

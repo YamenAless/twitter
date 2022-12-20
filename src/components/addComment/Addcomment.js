@@ -37,14 +37,21 @@ const Addcomment = ({ item, posts, setPosts }) => {
       body: JSON.stringify(commentData),
     });
     const json = await res.json();
+    if(json.success && remove.current.value  ===  ""){
+      return
+     }
     if (json.success) {
       SetComments([ ...comments, json.data]);
       const NewArrData = [...posts]
+      console.log(comments)
       const CCT = NewArrData.findIndex(singleItem => singleItem.id === item.id)
-      NewArrData[CCT].comments_count = parseInt(NewArrData[CCT].comments_count) + 1
+      NewArrData[CCT].comments_count = parseInt(comments.length)  + 1 
       setPosts(NewArrData)
       remove.current.value = "";
     }
+
+      
+  
   };
 
   return (
