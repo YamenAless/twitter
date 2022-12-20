@@ -28,10 +28,12 @@ const Profile = () => {
       body: fromData,
     })
     const json = await resp.json()
-    alert(json.messages)
     if(json.success){
+    window.alert(json.messages)
       setSendContent({...json.data, password:""})
       localStorage.setItem("user", JSON.stringify(json.data))
+    }else{
+    window.alert(json.messages)
     }
   }
 
