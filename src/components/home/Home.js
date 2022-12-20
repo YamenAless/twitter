@@ -12,7 +12,7 @@ const Home = () => {
   const [pageNum , setPageNum] = useState({})
   const [posts, setPosts] = useState([]);
   const [num, setNum] = useState(1);
-  const [loading , setLoading]  = useState(false)
+  const [loading , setLoading]  = useState(true)
   const clear = useRef()
 
   const handleOnScroll = () => {
@@ -22,9 +22,12 @@ const Home = () => {
     if (userScrollH >= windowBottomHeight ) { 
         setNum(num + 1);
     }
-    <Loadin/>
+
+    if(num >= pageNum.last_page){
+    setLoading(false)
+   
+    }
   };
-  console.log(pageNum.last_page)
 
   useEffect(() => {
     window.addEventListener("scroll", () => handleOnScroll());
@@ -38,17 +41,22 @@ const Home = () => {
 
 
   const getPosts = async (count) => {
-    setLoading(true);
-    const res = await fetch(`http://ferasjobeir.com/api/posts?page=${count}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const json = await res.json();
-    setPageNum({...json.data})
-    if (json.success) {
-      setPosts([...posts, ...json.data.data]);
+    if(loading){
+      const res = await fetch(`http://ferasjobeir.com/api/posts?page=${count}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const json = await res.json();
+      setPageNum({...json.data})
+      if (json.success) {
+        setPosts([...posts, ...json.data.data]);
+  
+
+      }
     }
+
+    
   };
 
 
@@ -108,8 +116,9 @@ const Home = () => {
       {posts.map((item) => (
         <SinglePost key={item.id} posts={posts} setPosts={setPosts} item={item} />
       ))}
-      {loading && <Loadin />}
-      {/* <p className="last-Page">The end of the posts</p> */}
+      {loading && <Loadin /> }
+      {/* {loading && <div className="last-Page">The end of the posts</div>} */}
+      
     </Layout>
   );
 };
