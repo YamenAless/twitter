@@ -117,7 +117,7 @@ const Home = () => {
         <SinglePost key={item.id} posts={posts} setPosts={setPosts} item={item} />
       ))}
       {loading && <Loadin /> }
-      {/* {loading && <div className="last-Page">The end of the posts</div>} */}
+      {!loading && <div className="last-Page">The end of the posts</div>}
       
     </Layout>
   );
