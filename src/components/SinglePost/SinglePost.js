@@ -5,7 +5,6 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import Addcomment from "../addComment/Addcomment";
 import { useState, useContext, useEffect } from "react";
 import { DataCtx } from "../../components/context/SaveData/SaveData";
-import logo from "../../logo.svg";
 import dayjs from "dayjs";
 import "./SinglePost.css";
 const SinglePost = ({ item, posts, setPosts }) => {

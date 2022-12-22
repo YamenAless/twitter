@@ -43,7 +43,7 @@ const Addcomment = ({ item, posts, setPosts }) => {
     if (json.success) {
       SetComments([ ...comments, json.data]);
       const NewArrData = [...posts]
-      console.log(comments)
+
       const CCT = NewArrData.findIndex(singleItem => singleItem.id === item.id)
       NewArrData[CCT].comments_count = parseInt(comments.length)  + 1 
       setPosts(NewArrData)
