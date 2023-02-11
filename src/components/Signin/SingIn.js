@@ -20,6 +20,7 @@ const Signin = () => {
   };
 
   const createUser = async (data) => {
+    console.log(data)
     const res = await fetch("http://ferasjobeir.com/api/users/login", {
       method: "POST",
       headers: {
@@ -36,13 +37,6 @@ const Signin = () => {
       alert(json.messages)
     }
   };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    await createUser(userData);
-  };
-
-
   return (
     <div className="signup-parent">
       <div className="row">
@@ -82,7 +76,7 @@ const Signin = () => {
                 </Link>
               </div>
               <div className="col-7">
-                <button className="rl-btn" onClick={handleSubmit}>Login</button>
+                <button className="rl-btn" onClick={()=> createUser(userData)}>Login</button>
               </div>
             </div>
           </div>
